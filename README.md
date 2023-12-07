@@ -33,7 +33,7 @@ We are going to be mapping the reads to the reference genome. The reason we use 
 
 ![puzzle piece](stock-vector-black-rotated-puzzle-piece-blue-gradient-vector-icon.jpeg)
 
-  If we look at it from just the top, we would put it in the blue area. If we look at it from the bottom, we would put it in either the purple or pink area. Looking at it from both directions gives us a better understanding of the location of the piece. Paired end reads work the same way, as they are read both forward and backwards. This gives us clues as to the exact location of the read.
+  If we look at it from just the top, we would put it in the blue area. If we look at it from the bottom, we would put it in the purple area. Looking at it from both directions gives us a better understanding of the location of the piece. Paired end reads work the same way, as they are read both forward and backwards. This gives us clues as to the exact location of the read.
 
 ![paired end reads](Figure17.png)
 
