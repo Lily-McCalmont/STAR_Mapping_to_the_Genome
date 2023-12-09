@@ -15,7 +15,7 @@
 
   One of the most common tools for human genome analysis is RNA-sequencing. This tool is used for defining alternative splicing sites and for finding differentially expressed genes. This presentation is about the program used for genome mapping portion of RNA-sequencing and differential analysis; STAR. STAR was created in order to address the pitfalls of high rates of mapping errors, low speed, and limited read lengths found in previous aligner programs. 
   
-![Star Process](alignment_STAR_step5.png)
+![Star Process](star_figure.jpg)
 
 ## 2. History of RNA Sequencing<a name="312"></a>
 
