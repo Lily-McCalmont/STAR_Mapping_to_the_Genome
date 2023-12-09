@@ -14,8 +14,6 @@
 ## 1. Introduction<a name="311"></a>
 
   One of the most common tools for human genome analysis is RNA-sequencing. This tool is used for defining alternative splicing sites and for finding differentially expressed genes. This presentation is about the program used for genome mapping portion of RNA-sequencing and differential analysis; STAR. STAR was created in order to address the pitfalls of high rates of mapping errors, low speed, and limited read lengths found in previous aligner programs. 
-  
-![Star Process](star_figure.jpg)
 
 ## 2. STAR Background Information<a name="316"></a>
 
@@ -59,7 +57,7 @@
   - The second step entails the alignment of these reads to the previously indexed reference genome. This step allows for the fine-tuning of parameters such as read length and sequence type to optimize alignment accuracy.
   - Once the alignment is completed, the resulting files, typically in SAM or BAM format, are ready for a comprehensive analysis. Beyond the alignment data, valuable information such as mapping statistics summaries, spliced junctions, and details on unmapped sections enrich the dataset, providing a more holistic perspective for subsequent in-depth exploration and interpretation of RNA-seq results.
 
-![]()
+![Star Process](star_figure.jpg)
 
 ## 8. Applications<a name="318"></a>
 
