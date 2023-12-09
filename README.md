@@ -70,15 +70,17 @@
 ## 10. Different Tools for BAM Mapping to Genome<a name="3110"></a>
 
 Besides STAR, there are other tools that we can employ in order to map reads to the genome, each with their own strengths and weaknesses. Examples of two such alternative tools are as follows:
-1) HISAT2 (Hierarchical Indexing for Spliced Alignment of Transcripts 2) is the best alternative to STAR as it is a splice-aware aligner that is considered to be even faster and more memory-efficient than STAR. A splice-aware aligner refers to taking into account the fact that reads can span multiple exons. HISAT2 was created using BWT (discussed further below) to compress the genome and uses FM indexing (Ferragina-Manzini indexing) to further decrease the amount of memory used. The creation of HISAT2 was highly influenced by the Bowtie2 implementation (discussed further below) in order to become an equal rival to STAR.
+1) __HISAT2__ (Hierarchical Indexing for Spliced Alignment of Transcripts 2) is the best alternative to STAR as it is a splice-aware aligner that is considered to be even faster and more memory-efficient than STAR. A splice-aware aligner refers to taking into account the fact that reads can span multiple exons. HISAT2 was created using BWT (discussed further below) to compress the genome and uses FM indexing (Ferragina-Manzini indexing) to further decrease the amount of memory used. The creation of HISAT2 was highly influenced by the Bowtie2 implementation (discussed further below) in order to become an equal rival to STAR.
+   
+![image](https://github.com/Lily-McCalmont/BENG_183_Final/assets/109799187/a6725fc0-249d-4ccd-b9f7-5d3610c54f42)
 
-2) Bowtie 1 & Bowtie 2 are short sequence mapping tools. While Bowtie is suitable for shorter reads, Bowtie 2 accommodates longer reads exceeding 50 base pairs and offers additional features. Like HISAT2 and BWA it uses BWT to compress genes to increase memory-efficiency. Just like HISAT2, Bowtie employs FM-indexing, which allows for quicker searches. However, it is important to note that Bowtie 1 & Bowtie 2 are usually not recommended for RNA-seq read mapping to the genome because they are not splice-aware. However, using TopHat, which uses Bowtie in order to align the reads, and then takes care of issues such as splice junctions.
-
-3) BWA (Burrows-Wheeler Aligner) is an alignment tool based on BWT (Burrows-Wheeler Transform) and designed for mapping low-divergent sequences against large reference genomes. Low-divergent sequences refer to sequences that share a significant similarity with the reference genome. BWA is primarily designed for aligning short reads against a genome. Due to this efficiency specifically for short reads, BWA comprises three algorithms for different read lengths and alignment scenarios:
-  i. BWA-backtrack: For sequence reads up to 100 bp
-  ii. BWA-SW: For sequence reads from 70 bp to 1 Mbp
-  iii. BWA-MEM: The recommended algorithm since is produces the most high quality queries and can handle a greater range of sequence reads than BWA-SW or BWA-backtrack
-Again, it is important to note that BWA is not splice-aware, meaning that it cannot recognise introns in eukaryotes, so BWA is usually not recommended for RNA-seq read mapping to a genome, rather it is better designed for mapping to a transcriptome. 
+2) __Bowtie 1 & Bowtie 2__ are short sequence mapping tools. While Bowtie is suitable for shorter reads, Bowtie 2 accommodates longer reads exceeding 50 base pairs and offers additional features. Like HISAT2 and BWA it uses BWT to compress genes to increase memory-efficiency. Just like HISAT2, Bowtie employs FM-indexing, which allows for quicker searches. However, it is important to note that Bowtie 1 & Bowtie 2 are usually not recommended for RNA-seq read mapping to the genome because they are not splice-aware. However, using TopHat, which uses Bowtie in order to align the reads, and then takes care of issues such as splice junctions.
+  
+3) __BWA__ (Burrows-Wheeler Aligner) is an alignment tool based on BWT (Burrows-Wheeler Transform) and designed for mapping low-divergent sequences against large reference genomes. Low-divergent sequences refer to sequences that share a significant similarity with the reference genome. BWA is primarily designed for aligning short reads against a genome. Due to this efficiency specifically for short reads, BWA comprises three algorithms for different read lengths and alignment scenarios:
+  <br> i. BWA-backtrack: For sequence reads up to 100 bp
+  <br> ii. BWA-SW: For sequence reads from 70 bp to 1 Mbp
+  <br> iii. BWA-MEM: The recommended algorithm since is produces the most high quality queries and can handle a greater range of sequence reads than BWA-SW or BWA-backtrack
+<br> Again, it is important to note that BWA is not splice-aware, meaning that it cannot recognise introns in eukaryotes, so BWA is usually not recommended for RNA-seq read mapping to a genome, rather it is better designed for mapping to a transcriptome. 
 
 
 ## 11. References<a name="3111"></a>
