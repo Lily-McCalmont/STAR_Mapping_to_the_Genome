@@ -21,7 +21,11 @@
 
   STAR stands for spliced transcripts alignment to a reference (genome). Universally, this is a program used for alignment. It creates an indexed genome in order to map faster. STAR is especially useful for finding non-canonical splice sites, chimeric sequences, and can map full length RNA sequences. 
 
-## 3. Setting Up<a name="313"></a>
+## 3. History of RNA Sequencing<a name="312"></a>
+
+  Before we dive into STAR, it is important to look back on the developmental past of RNA-sequencing like microarrays. Microarrays were first used with fluorescent markers in order to identify hybridization events. Although microarrays can identify hybridization events, it cannot help with alternative splicing events, SNP variations, or mutations.  We are briefly mentioning these other technologies since they all helped to contribute to the development of RNA sequencing. STAR is able to help address pitfalls in these previous technologies.
+
+## 4. Setting Up<a name="313"></a>
 
   To actually start mapping, we need two things: 
 - cleaned and trimmed reads
@@ -30,9 +34,9 @@
 <br> We are going to be mapping the reads to the reference genome. The reason we use a reference genome and not a specifically built genome is because it takes up a lot of memory and time. But there is also another reason. Any differences between the mapped reads and the reference could be attributed to mutations. The next step is to actually map the reads. The initial approach was to brute force pattern matching. Essentially taking the read and moving downstream until a match is found. But while this works well for short genomes and single reads, it doesn’t work for hundreds of reads and a full genome length. If we imagine the genome as a book, and a read as a phrase, what we are essentially trying to do is skim through the book to find the phrase. But what happens if there is a typo in the phrase, or a mutation in the read? One solution we just have is to just tell the program that we are using that it’s okay if there isn’t an exact match. Let's say, for example, that we want a 99% similariy between a read and the genome. This allows for single nucleotide polymorphisms to be kept in, and since the match is mostly exact, we can continue mapping. 
 <br> The STAR program creates its own indexed reference genome in order to more quickly sequence probable sites to map the reads. STAR uses a method called Maximal Mappable Prefixes in order to look for the longest sequence that aligns to the reference genome. The efficiency is obtained as STAR does not returned to this mapped part of the reference genome when it seeks for the second MMP. STAR specifically uses an uncompressed suffix array to iterate through the whole genome, which allows for large reference genomes to be sequenced at fas speeds compared to alternative programs. 
 
-![](star-map_step1.png)
+![](star-map_step1.png 
 
-## 4. Ways of Fixing the Ambiguous Mapping Problem<a name="314"></a>
+## 5. Ways of Fixing the Ambiguous Mapping Problem<a name="314"></a>
 
   Another problem that exists in read mapping is ambiguous mapping. Assume that the genome resembles a puzzle, and a read is a puzzle piece. In some cases, a piece can look like it fits into multiple spots. This is essentially what goes on with ambiguous reads. One read could map to multiple locations. (Using the book metaphor from the previous section, one phrase could be present in multiple pages) A way to solve this is to use paired end reads, which are reads that are read both forwards and backwards. Looking at the read from both directions can give us clues as to what spot the read belongs in. Going back to the puzzle metaphor, let’s assume we have this piece below.
 
@@ -44,13 +48,9 @@
 
   The next step is to make sure that the reads map well. (This is also useful to see if the correct location is chosen for the ambiguous read). For this we need to calculate a mapping quality, which is the probability that the mapping is incorrect. This is calculated using the individual read base qualities. If the quality is good, then we can feel confident in our mapping location of the read. And it’s this whole process in which STAR comes in.
 
-## 5. Improving the Process<a name="315"></a>
+## 6. Improving the Process<a name="315"></a>
 
   So how can we fix these mapping problems? We can improve mapping speed. STAR is about 50 fold faster than other current aligners. As shown in the table to the right, STAR does trade this efficiency with RAM usage, but it is significantly faster than other programs.  We can increase the lengths of reads being sequenced. With STAR having its own indexing command we are able to remove the limitations on read length. We can improve on, or more efficiently achieve the same accuracy as previous programs. 
-
-## 6. History of RNA Sequencing<a name="312"></a>
-
-  Before we dive into STAR, it is important to look back on the developmental past of RNA-sequencing like microarrays. Microarrays were first used with fluorescent markers in order to identify hybridization events. Although microarrays can identify hybridization events, it cannot help with alternative splicing events, SNP variations, or mutations.  We are briefly mentioning these other technologies since they all helped to contribute to the development of RNA sequencing. STAR is able to help address pitfalls in these previous technologies. 
 
 ## 7. Overview of STAR Steps<a name="317"></a>
 
