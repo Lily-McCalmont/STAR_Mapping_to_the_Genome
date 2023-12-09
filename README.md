@@ -1,10 +1,10 @@
 # Team 31: Read Mapping to Genomes using STAR
 1. [Background](#311)<br>
-2. [History of RNA Sequencing](#312)<br>
-3. [Setting Up](#313)<br>
-4. [Ways of Fixing the Ambiguous Mapping Problem](#314)<br>
-5. [Improving the Process](#315)<br>
-6. [STAR Background Information](#316)<br>
+2. [STAR Background Information](#316)<br>
+3. [History of RNA Sequencing](#312)<br>
+4. [Setting Up](#313)<br>
+5. [Ways of Fixing the Ambiguous Mapping Problem](#314)<br>
+6. [Improving the Process](#315)<br>
 7. [Overview of STAR Steps](#317)<br>
 8. [Applications](#318)<br>
 9. [Potential Errors](#319)<br>
@@ -17,9 +17,9 @@
   
 ![Star Process](star_figure.jpg)
 
-## 2. History of RNA Sequencing<a name="312"></a>
+## 2. STAR Background Information<a name="316"></a>
 
-  Before we dive into STAR, it is important to look back on the developmental past of RNA-sequencing like microarrays. Microarrays were first used with fluorescent markers in order to identify hybridization events. Although microarrays can identify hybridization events, it cannot help with alternative splicing events, SNP variations, or mutations.  We are briefly mentioning these other technologies since they all helped to contribute to the development of RNA sequencing. STAR is able to help address pitfalls in these previous technologies. 
+  STAR stands for spliced transcripts alignment to a reference (genome). Universally, this is a program used for alignment. It creates an indexed genome in order to map faster. STAR is especially useful for finding non-canonical splice sites, chimeric sequences, and can map full length RNA sequences. 
 
 ## 3. Setting Up<a name="313"></a>
 
@@ -48,9 +48,9 @@
 
   So how can we fix these mapping problems? We can improve mapping speed. STAR is about 50 fold faster than other current aligners. As shown in the table to the right, STAR does trade this efficiency with RAM usage, but it is significantly faster than other programs.  We can increase the lengths of reads being sequenced. With STAR having its own indexing command we are able to remove the limitations on read length. We can improve on, or more efficiently achieve the same accuracy as previous programs. 
 
-## 6. STAR Background Information<a name="316"></a>
+## 6. History of RNA Sequencing<a name="312"></a>
 
-  STAR stands for spliced transcripts alignment to a reference (genome). Universally, this is a program used for alignment. It creates an indexed genome in order to map faster. STAR is especially useful for finding non-canonical splice sites, chimeric sequences, and can map full length RNA sequences. 
+  Before we dive into STAR, it is important to look back on the developmental past of RNA-sequencing like microarrays. Microarrays were first used with fluorescent markers in order to identify hybridization events. Although microarrays can identify hybridization events, it cannot help with alternative splicing events, SNP variations, or mutations.  We are briefly mentioning these other technologies since they all helped to contribute to the development of RNA sequencing. STAR is able to help address pitfalls in these previous technologies. 
 
 ## 7. Overview of STAR Steps<a name="317"></a>
 
