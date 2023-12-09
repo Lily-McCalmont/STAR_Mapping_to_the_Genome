@@ -52,10 +52,9 @@
 
 ## 7. Overview of STAR Steps<a name="317"></a>
 
-  In the process of RNA-seq analysis using the STAR method, several steps occur. 
-  - Initially, we first have to index the reference genome extracted from FASTA/FASTQ files. This is critical to facilitate the alignment of RNA-seq reads in the next steps.
-  - The second step entails the alignment of these reads to the previously indexed reference genome. This step allows for the fine-tuning of parameters such as read length and sequence type to optimize alignment accuracy.
-  - Once the alignment is completed, the resulting files, typically in SAM or BAM format, are ready for a comprehensive analysis. Beyond the alignment data, valuable information such as mapping statistics summaries, spliced junctions, and details on unmapped sections enrich the dataset, providing a more holistic perspective for subsequent in-depth exploration and interpretation of RNA-seq results.
+1) Index the reference genome extracted from FASTA/FASTQ files and given annotations via a GTF file. These genome indexes only need to be generated once for each pairing for reference genome and given annotation. This is critical to facilitate the alignment of RNA-seq reads in the next steps.
+2) Align reads, in the form of a FASTA/FASTQ file, to the previously indexed reference genome. This step allows for the fine-tuning of parameters such as read length and sequence type to optimize alignment accuracy.
+3) Once the alignment is completed, the resulting files, typically in SAM or BAM format, are ready for a comprehensive analysis. Beyond the alignment data, valuable information such as mapping statistics summaries, spliced junctions, and details on unmapped sections enrich the dataset, providing a more holistic perspective for subsequent in-depth exploration and interpretation of RNA-seq results. Downstream analyses such as gene expression quantification, differential gene expression, etc. can be performed on the output data.
 
 ![Star Process](star_figure.jpg)
 
@@ -65,23 +64,31 @@
 
 ## 9. Potential Errors<a name="319"></a>
 
-  While STAR is a very useful tool for RNA-seq analysis, several potential errors and challenges should be considered. One issue arises from updates to reference genomes, as modifications or additions can be incompatible with previously mapped BAM files. This process can be particularly difficult for large datasets, negatively affecting the efficiency of the analysis pipeline. Another challenge pertains to compatibility issues with downstream analysis tools. The immediate BAM/SAM output of certain remapping tools may not seamlessly integrate with subsequent analytical platforms. Additionally, errors in the reference genome itself can compromise the precision of the mapping process. Inaccuracies in the genome sequence can lead to misalignments, therefore also affecting downstream analyses such as variant calling (which is the process of identifying and categorizing genetic variations) and gene expression analysis.
+While STAR is a very useful tool for RNA-seq analysis, several potential errors and challenges should be considered:
+
+<br>1) __Updating reference genomes__: Modifications or additions can be incompatible with previously mapped BAM files. An issue arises when reference genomes are updated, meaning that previously mapped BAM files become outdated, so we need to remap to the most recent reference genome version. This process can be particularly difficult for large datasets, negatively affecting the efficiency of the analysis pipeline. 
+
+<br>2) __Compatibility issues with downstream analysis tools__: The immediate BAM/SAM output of certain remapping tools may not seamlessly integrate with subsequent analytical platforms. Thus, this may require additional processing/modifications to continue.
+
+<br>3) __Errors in the reference genome__: This can compromise the precision of the mapping process. Inaccuracies in the genome sequence can lead to misalignments, therefore also affecting downstream analyses such as variant calling, the process of identifying and categorizing genetic variations, and gene expression analysis.
+
+<br>These challenges can extend to other mapping tools as well, such as the ones discussed in the following section.
 
 ## 10. Different Tools for BAM Mapping to Genome<a name="3110"></a>
 
-Besides STAR, there are other tools that we can employ in order to map reads to the genome, each with their own strengths and weaknesses. Examples of two such alternative tools are as follows:
-1) __HISAT2__ (Hierarchical Indexing for Spliced Alignment of Transcripts 2) is the best alternative to STAR as it is a splice-aware aligner that is considered to be even faster and more memory-efficient than STAR. A splice-aware aligner refers to taking into account the fact that reads can span multiple exons. HISAT2 was created using BWT (discussed further below) to compress the genome and uses FM indexing (Ferragina-Manzini indexing) to further decrease the amount of memory used. The creation of HISAT2 was highly influenced by the Bowtie2 implementation (discussed further below) in order to become an equal rival to STAR.
-   
+Besides STAR, there are other tools that we can employ in order to map reads to the genome, each with their own strengths and weaknesses. Examples of three such alternative tools are as follows:
+
+<br>1) __HISAT2__ (Hierarchical Indexing for Spliced Alignment of Transcripts 2) is the best alternative to STAR as it is a splice-aware aligner that is considered to be even faster and more memory-efficient than STAR. A splice-aware aligner refers to taking into account the fact that reads can span multiple exons. HISAT2 was created using BWT (discussed further below) to compress the genome and uses FM indexing (Ferragina-Manzini indexing) to further decrease the amount of memory used. The creation of HISAT2 was highly influenced by the Bowtie2 implementation (discussed further below) in order to become a rival of STAR.
+
 ![image](https://github.com/Lily-McCalmont/BENG_183_Final/assets/109799187/a6725fc0-249d-4ccd-b9f7-5d3610c54f42)
 
-2) __Bowtie 1 & Bowtie 2__ are short sequence mapping tools. While Bowtie is suitable for shorter reads, Bowtie 2 accommodates longer reads exceeding 50 base pairs and offers additional features. Like HISAT2 and BWA it uses BWT to compress genes to increase memory-efficiency. Just like HISAT2, Bowtie employs FM-indexing, which allows for quicker searches. However, it is important to note that Bowtie 1 & Bowtie 2 are usually not recommended for RNA-seq read mapping to the genome because they are not splice-aware. However, using TopHat, which uses Bowtie in order to align the reads, and then takes care of issues such as splice junctions.
-  
-3) __BWA__ (Burrows-Wheeler Aligner) is an alignment tool based on BWT (Burrows-Wheeler Transform) and designed for mapping low-divergent sequences against large reference genomes. Low-divergent sequences refer to sequences that share a significant similarity with the reference genome. BWA is primarily designed for aligning short reads against a genome. Due to this efficiency specifically for short reads, BWA comprises three algorithms for different read lengths and alignment scenarios:
-  <br> i. BWA-backtrack: For sequence reads up to 100 bp
-  <br> ii. BWA-SW: For sequence reads from 70 bp to 1 Mbp
-  <br> iii. BWA-MEM: The recommended algorithm since is produces the most high quality queries and can handle a greater range of sequence reads than BWA-SW or BWA-backtrack
-<br> Again, it is important to note that BWA is not splice-aware, meaning that it cannot recognise introns in eukaryotes, so BWA is usually not recommended for RNA-seq read mapping to a genome, rather it is better designed for mapping to a transcriptome. 
+<br>2) __Bowtie1 & Bowtie2__ are short sequence mapping tools. While Bowtie is suitable for shorter reads, Bowtie 2 accommodates longer reads exceeding 50 base pairs and offers additional features. Like HISAT2 and BWA it uses BWT to compress genes to increase memory-efficiency. Just like HISAT2, Bowtie employs FM-indexing, which allows for quicker searches. However, it is important to note that Bowtie1 & Bowtie2 are usually not recommended for RNA-seq read mapping to the genome because they are not splice-aware. However, using TopHat, which uses Bowtie in order to align the reads, and then takes care of issues such as splice junctions.
 
+<br>3) __BWA__ (Burrows-Wheeler Aligner) is an alignment tool based on BWT (Burrows-Wheeler Transform) and designed for mapping low-divergent sequences against large reference genomes. Low-divergent sequences refer to sequences that share a significant similarity with the reference genome. BWA is primarily designed for aligning short reads against a genome. Due to this efficiency specifically for short reads, BWA comprises three algorithms for different read lengths and alignment scenarios:
+<br>i. BWA-backtrack: For sequence reads up to 100 bp
+<br>ii. BWA-SW: For sequence reads from 70 bp to 1 Mbp
+<br>iii. BWA-MEM: The recommended algorithm since is produces the most high quality queries and can handle a greater range of sequence reads than BWA-SW or BWA-backtrack
+<br>Again, it is important to note that BWA is not splice-aware, meaning that it cannot recognise introns in eukaryotes, so BWA is usually not recommended for RNA-seq read mapping to a genome, rather it is better designed for mapping to a transcriptome. 
 
 ## 11. References<a name="3111"></a>
 
