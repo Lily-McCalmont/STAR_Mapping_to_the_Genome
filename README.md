@@ -54,7 +54,12 @@
 
 ## 7. Overview of STAR Steps<a name="317"></a>
 
-  In the process of RNA-seq analysis using the STAR method, several steps occur. Initially, we first have to index the reference genome extracted from FASTA/FASTQ files. This is critical to facilitate the alignment of RNA-seq reads in the next steps. The second step entails the alignment of these reads to the previously indexed reference genome. This step allows for the fine-tuning of parameters such as read length and sequence type to optimize alignment accuracy. Once the alignment is completed, the resulting files, typically in SAM or BAM format, are ready for a comprehensive analysis. Beyond the alignment data, valuable information such as mapping statistics summaries, spliced junctions, and details on unmapped sections enrich the dataset, providing a more holistic perspective for subsequent in-depth exploration and interpretation of RNA-seq results.
+  In the process of RNA-seq analysis using the STAR method, several steps occur. 
+  - Initially, we first have to index the reference genome extracted from FASTA/FASTQ files. This is critical to facilitate the alignment of RNA-seq reads in the next steps.
+  - The second step entails the alignment of these reads to the previously indexed reference genome. This step allows for the fine-tuning of parameters such as read length and sequence type to optimize alignment accuracy.
+  - Once the alignment is completed, the resulting files, typically in SAM or BAM format, are ready for a comprehensive analysis. Beyond the alignment data, valuable information such as mapping statistics summaries, spliced junctions, and details on unmapped sections enrich the dataset, providing a more holistic perspective for subsequent in-depth exploration and interpretation of RNA-seq results.
+
+![]()
 
 ## 8. Applications<a name="318"></a>
 
