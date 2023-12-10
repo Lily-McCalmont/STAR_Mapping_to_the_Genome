@@ -55,16 +55,24 @@
 1)Index the reference genome extracted from FASTA/FASTQ files and given annotations via a GTF file. These genome indexes only need to be generated once for each pairing for reference genome and given annotation. This is critical to facilitate the alignment of RNA-seq reads in the next steps.
 
 2)Align reads, in the form of a FASTA/FASTQ file, to the previously indexed reference genome. This step allows for the fine-tuning of parameters such as read length and sequence type to optimize alignment accuracy.
-<br>i. Seed search: This involves searching for the longest sequences that exactly match one or more locations on the reference genome. Such sequences are called MMPs (Maximal Mappable Prefixes). Seeds refer to short sequences (12-24 bps) within reads that will signal potential matching locations in the reference genome which are mapped separately. STAR searches for the unmapped part of the read, again searching for the next MMP. This next MMP then becomes “seed2”. The figure below illustrates the MMP search’s detection of (a) splice junctions, (b) mismatches and (c) tails.
+<br> i. Seed search: This involves searching for the longest sequences that exactly match one or more locations on the reference genome. Such sequences are called MMPs (Maximal Mappable Prefixes). Seeds refer to short sequences (12-24 bps) within reads that will signal potential matching locations in the reference genome which are mapped separately. STAR searches for the unmapped part of the read, again searching for the next MMP. This next MMP then becomes “seed2”. The figure below illustrates the MMP search’s detection of (a) splice junctions, (b) mismatches and (c) tails.
 
 ![Star Process](star_figure.jpg)
 
-<br>ii. Clustering, stitching, and scoring: Clustering refers to the grouping of separate seeds together based on how close they are to a set of seeds that are not part of multi-mapping, called anchor seeds. Stitching involves combining the seeds to create the best alignment for the read. The quality of alignment is based on features such as mismatches, gaps, indels, etc. The assessment of the quality of alignment is called scoring. The combination of these three steps allows for accurate and complete mapping of RNA-seq reads to the genome.
+<br> ii. Clustering, stitching, and scoring: Clustering refers to the grouping of separate seeds together based on how close they are to a set of seeds that are not part of multi-mapping, called anchor seeds. Stitching involves combining the seeds to create the best alignment for the read. The quality of alignment is based on features such as mismatches, gaps, indels, etc. The assessment of the quality of alignment is called scoring. The combination of these three steps allows for accurate and complete mapping of RNA-seq reads to the genome.
 
-3)Once the alignment is completed, the resulting files, typically in SAM or BAM format, are ready for a comprehensive analysis. Beyond the alignment data, valuable information such as mapping statistics summaries, spliced junctions, and details on unmapped sections enrich the dataset, providing a more holistic perspective for subsequent in-depth exploration and interpretation of RNA-seq results. Downstream analyses such as gene expression quantification, differential gene expression, etc. can be performed on the output data.
+3) Once the alignment is completed, the resulting files, typically in SAM or BAM format, are ready for a comprehensive analysis. Beyond the alignment data, valuable information such as mapping statistics summaries, spliced junctions, and details on unmapped sections enrich the dataset, providing a more holistic perspective for subsequent in-depth exploration and interpretation of RNA-seq results. Downstream analyses such as gene expression quantification, differential gene expression, etc. can be performed on the output data.
 
-# 7a. Example STAR run
+### 7a. Example STAR run
 
+1. Make directory to store outputs
+`cd1 ____`
+`mkdir ____`
+3. Generating Genome Indices
+`--runThreadN NumberOfThreads --runMode genomeGenerate --genomeDir /path/to/genomeDir --genomeFastaFiles /path/to/genome/fasta1 /path/to/genome/fasta2 --sjdbGTFfile /path/to/annotations.gtf --sjdbOverhang ReadLength-1`
+4. Mapping to STAR indexed genome
+`--runThreadN NumberOfThreads --genomeDir /path/to/genomeDir --readFilesIn /path/to/read1 [/path/to/read2 ]`
+* (STAR manua 2.7)
 
 ## 8. Applications<a name="318"></a>
 
