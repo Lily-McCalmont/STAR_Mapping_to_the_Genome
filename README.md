@@ -107,7 +107,6 @@ Besides STAR, there are other tools that we can employ in order to map reads to 
     - BWA-backtrack: For sequence reads up to 100 bp
     - BWA-SW: For sequence reads from 70 bp to 1 Mbp
     - BWA-MEM: The recommended algorithm since is produces the most high quality queries and can handle a greater range of sequence reads than BWA-SW or BWA-backtrack
- 
 <br>Again, it is important to note that BWA is not splice-aware, meaning that it cannot recognise introns in eukaryotes, so BWA is usually not recommended for RNA-seq read mapping to a genome, rather it is better designed for mapping to a transcriptome. 
 
 ## 11. References<a name="3111"></a>
