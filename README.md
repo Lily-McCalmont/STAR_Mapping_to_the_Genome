@@ -6,6 +6,7 @@
 5. [Ways of Fixing the Ambiguous Mapping Problem](#314)<br>
 6. [Improving the Process](#315)<br>
 7. [Overview of STAR Steps](#317)<br>
+7a.[Example STAR run](#320)<br>
 8. [Applications](#318)<br>
 9. [Potential Errors](#319)<br>
 10. [Different Tools for BAM Mapping to Genome](#3110)<br>
@@ -63,16 +64,16 @@
 
 3) Once the alignment is completed, the resulting files, typically in SAM or BAM format, are ready for a comprehensive analysis. Beyond the alignment data, valuable information such as mapping statistics summaries, spliced junctions, and details on unmapped sections enrich the dataset, providing a more holistic perspective for subsequent in-depth exploration and interpretation of RNA-seq results. Downstream analyses such as gene expression quantification, differential gene expression, etc. can be performed on the output data.
 
-### 7a. Example STAR run
+### 7a. Example STAR run<a name="320"<>/a>
 
 1. Make directory to store outputs
-`cd1 ____`
-`mkdir ____`
+<br>`cd1 ____`
+<br>`mkdir ____`
 3. Generating Genome Indices
-`--runThreadN NumberOfThreads --runMode genomeGenerate --genomeDir /path/to/genomeDir --genomeFastaFiles /path/to/genome/fasta1 /path/to/genome/fasta2 --sjdbGTFfile /path/to/annotations.gtf --sjdbOverhang ReadLength-1`
+<br>`--runThreadN NumberOfThreads --runMode genomeGenerate --genomeDir /path/to/genomeDir --genomeFastaFiles /path/to/genome/fasta1 /path/to/genome/fasta2 --sjdbGTFfile /path/to/annotations.gtf --sjdbOverhang ReadLength-1`
 4. Mapping to STAR indexed genome
-`--runThreadN NumberOfThreads --genomeDir /path/to/genomeDir --readFilesIn /path/to/read1 [/path/to/read2 ]`
-* (STAR manua 2.7)
+<br>`--runThreadN NumberOfThreads --genomeDir /path/to/genomeDir --readFilesIn /path/to/read1 [/path/to/read2 ]`
+* (source: STAR manual 2.7)
 
 ## 8. Applications<a name="318"></a>
 
