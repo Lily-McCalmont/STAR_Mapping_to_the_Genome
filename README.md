@@ -53,14 +53,15 @@
 
 ## 7. Overview of STAR Steps<a name="317"></a>
 
-1)Index the reference genome extracted from FASTA/FASTQ files and given annotations via a GTF file. These genome indexes only need to be generated once for each pairing for reference genome and given annotation. This is critical to facilitate the alignment of RNA-seq reads in the next steps.
+1) Index the reference genome extracted from FASTA/FASTQ files and given annotations via a GTF file. These genome indexes only need to be generated once for each pairing for reference genome and given annotation. This is critical to facilitate the alignment of RNA-seq reads in the next steps.
 
-2)Align reads, in the form of a FASTA/FASTQ file, to the previously indexed reference genome. This step allows for the fine-tuning of parameters such as read length and sequence type to optimize alignment accuracy.
-<br> i. Seed search: This involves searching for the longest sequences that exactly match one or more locations on the reference genome. Such sequences are called MMPs (Maximal Mappable Prefixes). Seeds refer to short sequences (12-24 bps) within reads that will signal potential matching locations in the reference genome which are mapped separately. STAR searches for the unmapped part of the read, again searching for the next MMP. This next MMP then becomes “seed2”. The figure below illustrates the MMP search’s detection of (a) splice junctions, (b) mismatches and (c) tails.
+2) Align reads, in the form of a FASTA/FASTQ file, to the previously indexed reference genome. This step allows for the fine-tuning of parameters such as read length and sequence type to optimize alignment accuracy.
 
-![Star Process](star_figure.jpg)
+	  - Seed search: This involves searching for the longest sequences that exactly match one or more locations on the reference genome. Such sequences are called MMPs (Maximal Mappable Prefixes). Seeds refer to short sequences (12-24 bps) within reads that will signal potential matching locations in the reference genome which are mapped separately. STAR searches for the unmapped part of the read, again searching for the next MMP. This next MMP then becomes “seed2”. The figure below illustrates the MMP search’s detection of (a) splice junctions, (b) mismatches and (c) tails.
 
-<br> ii. Clustering, stitching, and scoring: Clustering refers to the grouping of separate seeds together based on how close they are to a set of seeds that are not part of multi-mapping, called anchor seeds. Stitching involves combining the seeds to create the best alignment for the read. The quality of alignment is based on features such as mismatches, gaps, indels, etc. The assessment of the quality of alignment is called scoring. The combination of these three steps allows for accurate and complete mapping of RNA-seq reads to the genome.
+    - Clustering, stitching, and scoring: Clustering refers to the grouping of separate seeds together based on how close they are to a set of seeds that are not part of multi-mapping, called anchor seeds. Stitching involves combining the seeds to create the best alignment for the read. The quality of alignment is based on features such as mismatches, gaps, indels, etc. The assessment of the quality of alignment is called scoring. The combination of these three steps allows for accurate and complete mapping of RNA-seq reads to the genome.
+    
+		 ![Star Process](star_figure.jpg)
 
 3) Once the alignment is completed, the resulting files, typically in SAM or BAM format, are ready for a comprehensive analysis. Beyond the alignment data, valuable information such as mapping statistics summaries, spliced junctions, and details on unmapped sections enrich the dataset, providing a more holistic perspective for subsequent in-depth exploration and interpretation of RNA-seq results. Downstream analyses such as gene expression quantification, differential gene expression, etc. can be performed on the output data.
 
@@ -95,13 +96,16 @@ While STAR is a very useful tool for RNA-seq analysis, several potential errors 
 
 Besides STAR, there are other tools that we can employ in order to map reads to the genome, each with their own strengths and weaknesses. Examples of three such alternative tools are as follows:
 
-<br>1) __HISAT2__ (Hierarchical Indexing for Spliced Alignment of Transcripts 2) is the best alternative to STAR as it is a splice-aware aligner that is considered to be even faster and more memory-efficient than STAR. A splice-aware aligner refers to taking into account the fact that reads can span multiple exons. HISAT2 was created using BWT (discussed further below) to compress the genome and uses FM indexing (Ferragina-Manzini indexing) to further decrease the amount of memory used. The creation of HISAT2 was highly influenced by the Bowtie2 implementation (discussed further below) in order to become a rival of STAR.
+<br>
+1. HISAT2 (Hierarchical Indexing for Spliced Alignment of Transcripts 2) is the best alternative to STAR as it is a splice-aware aligner that is considered to be even faster and more memory-efficient than STAR. A splice-aware aligner refers to taking into account the fact that reads can span multiple exons. HISAT2 was created using BWT (discussed further below) to compress the genome and uses FM indexing (Ferragina-Manzini indexing) to further decrease the amount of memory used. The creation of HISAT2 was highly influenced by the Bowtie2 implementation (discussed further below) in order to become a rival of STAR.
 
 ![image](https://github.com/Lily-McCalmont/BENG_183_Final/assets/109799187/a6725fc0-249d-4ccd-b9f7-5d3610c54f42)
 
-<br>2) __Bowtie1 & Bowtie2__ are short sequence mapping tools. While Bowtie is suitable for shorter reads, Bowtie 2 accommodates longer reads exceeding 50 base pairs and offers additional features. Like HISAT2 and BWA it uses BWT to compress genes to increase memory-efficiency. Just like HISAT2, Bowtie employs FM-indexing, which allows for quicker searches. However, it is important to note that Bowtie1 & Bowtie2 are usually not recommended for RNA-seq read mapping to the genome because they are not splice-aware. However, using TopHat, which uses Bowtie in order to align the reads, and then takes care of issues such as splice junctions.
+<br>
+2. Bowtie1 & Bowtie2 are short sequence mapping tools. While Bowtie is suitable for shorter reads, Bowtie 2 accommodates longer reads exceeding 50 base pairs and offers additional features. Like HISAT2 and BWA it uses BWT to compress genes to increase memory-efficiency. Just like HISAT2, Bowtie employs FM-indexing, which allows for quicker searches. However, it is important to note that Bowtie1 & Bowtie2 are usually not recommended for RNA-seq read mapping to the genome because they are not splice-aware. However, using TopHat, which uses Bowtie in order to align the reads, and then takes care of issues such as splice junctions.
 
-<br>3) __BWA__ (Burrows-Wheeler Aligner) is an alignment tool based on BWT (Burrows-Wheeler Transform) and designed for mapping low-divergent sequences against large reference genomes. Low-divergent sequences refer to sequences that share a significant similarity with the reference genome. BWA is primarily designed for aligning short reads against a genome. Due to this efficiency specifically for short reads, BWA comprises three algorithms for different read lengths and alignment scenarios:
+<br>
+3. BWA (Burrows-Wheeler Aligner) is an alignment tool based on BWT (Burrows-Wheeler Transform) and designed for mapping low-divergent sequences against large reference genomes. Low-divergent sequences refer to sequences that share a significant similarity with the reference genome. BWA is primarily designed for aligning short reads against a genome. Due to this efficiency specifically for short reads, BWA comprises three algorithms for different read lengths and alignment scenarios:
 <br>i. BWA-backtrack: For sequence reads up to 100 bp
 <br>ii. BWA-SW: For sequence reads from 70 bp to 1 Mbp
 <br>iii. BWA-MEM: The recommended algorithm since is produces the most high quality queries and can handle a greater range of sequence reads than BWA-SW or BWA-backtrack
@@ -135,5 +139,20 @@ genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1832-y.
 - Burrows-Wheeler Alignment (BWA) - Research Computing Documentation, 
 wiki.rc.usf.edu/index.php/Burrows-Wheeler_Alignment_(BWA). Accessed 27 Nov. 2023.
 - Meeta Mistry, Bob Freeman. “Alignment with Star.” Introduction to RNA-Seq Using High-Performance Computing - ARCHIVED, 7 June 2017, hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html#:~:text=STAR%20uses%20an%20uncompressed%20suffix,performing%20iterative%20rounds%20of%20mapping. 
-
+- Burrows-Wheeler Alignment (BWA) - Research Computing Documentation, 
+wiki.rc.usf.edu/index.php/Burrows-Wheeler_Alignment_(BWA). Accessed 27 Nov. 2023.
+- Meeta Mistry, Bob Freeman. “Alignment with Star.” Introduction to RNA-Seq Using High-Performance Computing - ARCHIVED, 7 June 2017, hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html#:~:text=STAR%20uses%20an%20uncompressed%20suffix,performing%20iterative%20rounds%20of%20mapping.
+- BWA or STAR for RNAseq? [Online forum post]. (2018). Biostars. https://www.biostars.org/p/330942/
+Arasappan, D. (2023, June 13). Mapping with BWA. The University of Texas at Austin. https://wikis.utexas.edu/display/bioiteam/Mapping+with+BWA
+- Bowtie for RNA Seq data [Online forum post]. (2013). Biostars. https://www.biostars.org/p/63477/
+- R. Franco, A. (2022). Questions about using Bowtie2 [Online forum post]. Biostars. https://www.biostars.org/p/166381/
+- TopHat2 and Bowtie compatibility. (n.d.). Read the Docs. https://tophat2-and-bowtie-compatibility.readthedocs.io/en/latest/
+- Ryan, D. (2022). RNA-seq differential expression analysis, which aligner to choose between BWA/tophat/Bowtie? [Online forum post]. Biostars. https://www.biostars.org/p/130451/
+- Bedre, R. (2023, April 9). HISAT2: Fast Aligner for NGS Data (Complete Tutorial) [Video]. RS Blog. https://www.reneshbedre.com/blog/hisat2-sequence-aligner.html
+- Arasappan, D. (2022, June 15). Mapping with HISAT2. The University of Texas at Austin. https://wikis.utexas.edu/display/bioiteam/Mapping+with+HISAT2
+- Kim, D., Langmead, B., Pertea, G., & Salzberg, S. (n.d.). HISAT: Hierarchical Indexing for Spliced Alignment of Transcripts. Center for Computational Biology. http://www.ccb.jhu.edu/software/hisat/index.shtml
+- Kim, J. S., Fırtına, C., Cavlak, M. B., Cali, D. S., Alkan, C., & Mutlu, O. (2022). FastRemap: a tool for quickly remapping reads between genome assemblies. Bioinformatics, 38(19), 4633–4635. https://doi.org/10.1093/bioinformatics/btac554
+- Dobin, A. (2019). STAR manual 2.7.0a. https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf
+- Dobin, A., Davis, C. A., Schlesinger, F., Drenkow, J., Zaleski, C., Jha, S., Batut, P., Chaisson, M., & Gingeras, T. (2012). STAR: ultrafast universal RNA-seq aligner. Bioinformatics, 29(1), 15–21. https://doi.org/10.1093/bioinformatics/bts635
+- Piper, M. M. B. F. M. (2017, June 7). Alignment with STAR. Introduction to RNA-Seq using high-performance computing - ARCHIVED. https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html
 
