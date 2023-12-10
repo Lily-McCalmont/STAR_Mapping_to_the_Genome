@@ -63,6 +63,9 @@
 
 3)Once the alignment is completed, the resulting files, typically in SAM or BAM format, are ready for a comprehensive analysis. Beyond the alignment data, valuable information such as mapping statistics summaries, spliced junctions, and details on unmapped sections enrich the dataset, providing a more holistic perspective for subsequent in-depth exploration and interpretation of RNA-seq results. Downstream analyses such as gene expression quantification, differential gene expression, etc. can be performed on the output data.
 
+# 7a. Example STAR run
+
+
 ## 8. Applications<a name="318"></a>
 
   One application for STAR read mapping is that we can identify mutations and variants. If there are enough small differences in the lineage we are studying, then we can say that it is a variant of the original lineage. These variants can then be studied to make vaccines, if the genome that we are studying is a virus. This is clearly shown today when looking at covid. Another application is identifying gene expression levels. If one gene is expressed in greater levels than before, then with read mapping, we can identify the sequence that corresponds to said gene. Once that is identified, we can then conduct experiments to figure out what exactly that read does for gene expression. This could be applied to studying various diseases which cause, or are caused by, changes in gene expression levels. 
